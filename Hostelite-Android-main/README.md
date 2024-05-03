@@ -48,22 +48,3 @@ For Administration, the following features will be integrated:
 <img src="https://github.com/SrijanShovit/Hostelite-Android/blob/main/Screenshots/Login.jpeg" alt="android" width="220" height="500"/> 
 <img src="https://github.com/SrijanShovit/Hostelite-Android/blob/main/Screenshots/StudentHomePage.jpeg" alt="android" width="220" height="500"/> 
 <img src="https://github.com/SrijanShovit/Hostelite-Android/blob/main/Screenshots/ReportIssuePage.jpeg" alt="android" width="220" height="500"/> </p>
-
-
-### Interested?🤩 Check how you can be a part of it👇
-
-- Do take care of [Code of Conduct](https://github.com/SrijanShovit/Hostelite-Android/blob/main/CODE_OF_CONDUCT.md)
-- Checkout the [CONTRIBUTING.md](https://github.com/SrijanShovit/Hostelite-Android/blob/main/CONTRIBUTING.md) for the contribution guidelines 
-
-## Our budding maintainer and contributors:
-
-<a href="https://github.com/SrijanShovit/Hostelite-Android/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=SrijanShovit/Hostelite-Android" />
-</a>
-
-Made with [contrib.rocks](https://contrib.rocks).
-
-<h4>If you 💓 this, do smash the ⭐ button!!</h4>
-
-Thanks for visiting!!
-
