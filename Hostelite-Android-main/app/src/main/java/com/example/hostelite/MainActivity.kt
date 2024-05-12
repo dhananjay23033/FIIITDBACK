@@ -21,12 +21,14 @@ import com.example.hostelite.presentation.landing_pages.Login
 import com.example.hostelite.presentation.landing_pages.SplashScreen
 import com.example.hostelite.presentation.student_screens.*
 import com.example.hostelite.ui.theme.HosteliteTheme
+import com.google.firebase.FirebaseApp
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             HosteliteTheme {
                 // A surface container using the 'background' color from the theme

@@ -1,36 +1,26 @@
 {
   "project_info": {
-    "project_number": "588099118767",
-    "project_id": "hostelite-compose",
-    "storage_bucket": "hostelite-compose.appspot.com"
+    "project_number": "648058259966",
+    "project_id": "fiiitdback",
+    "storage_bucket": "fiiitdback.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:588099118767:android:10bdb9f9ccc590ec5e565a",
+        "mobilesdk_app_id": "1:648058259966:android:54f36d8b0b36d003cfd8af",
         "android_client_info": {
           "package_name": "com.example.hostelite"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "588099118767-g8mjo9qa0csq9mu6hblll174c4gaisvn.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyC_t7LdzS5LJvYWQofGlxOLFTrzQH1yAfQ"
+          "current_key": "AIzaSyD8KOxUYUaFNDd00lqNuaD70t-U-10WBiw"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "588099118767-g8mjo9qa0csq9mu6hblll174c4gaisvn.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }
