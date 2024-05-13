@@ -1,6 +1,7 @@
 package com.example.hostelite.presentation.student_screens
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.*
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.scrollable
@@ -14,6 +15,8 @@ import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.AddAlert
 import androidx.compose.material.icons.outlined.Close
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,6 +33,8 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.hostelite.R
 import com.example.hostelite.shared.widgets.BottomDrawer
+import com.example.hostelite.util.Constants
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -37,6 +42,34 @@ import kotlinx.coroutines.launch
 fun StudentHome(navController: NavController){
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val coroutineScope = rememberCoroutineScope()
+
+    val firestore = FirebaseFirestore.getInstance()
+
+    // Retrieve student email entered during sign In
+    val email = navController.currentBackStackEntry?.savedStateHandle?.get<String>("email")
+    val userDocRef = email?.let { firestore.collection(Constants.COLLECTION_NAME_STUDENTS).document(it) }
+
+    Log.d("email", email.toString())
+
+    Log.d("userDocRef", userDocRef.toString())
+
+    // State to hold student details
+    val studentName = remember { mutableStateOf("") }
+    val roomNumber = remember { mutableStateOf("") }
+
+    if (userDocRef != null) {
+        userDocRef.get().addOnSuccessListener { document ->
+            if (document != null && document.exists()) {
+                val data = document.data
+                studentName.value = data?.get("userName").toString()
+                roomNumber.value = data?.get("roomNo").toString()
+            }
+        }
+    }
+
+    Log.d("studentName", studentName.toString())
+    Log.d("room No", roomNumber.toString())
+
     ModalDrawer(
         drawerContent = {
             Box(
@@ -78,7 +111,7 @@ fun StudentHome(navController: NavController){
                     )
                     Spacer(modifier = Modifier.height(20.dp))
                     Text(
-                        text = "Ritwik Singh",
+                        text = studentName.value,
                         style = TextStyle(
                             color = Color(0xFF636363),
                             fontSize = 28.sp,
@@ -87,7 +120,7 @@ fun StudentHome(navController: NavController){
                     )
                     Spacer(modifier = Modifier.height(5.dp))
                     Text(
-                        text = "Room no: 2-3",
+                        text = roomNumber.value,
                         style = TextStyle(
                             fontSize = 20.sp,
                             color = Color(0xFF535353),
