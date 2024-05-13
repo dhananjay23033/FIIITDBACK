@@ -1,5 +1,8 @@
 package com.example.hostelite.presentation.student_screens
 
+import android.app.Activity
+import android.content.Context
+import android.content.pm.PackageManager
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -17,17 +20,26 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.app.ActivityCompat
 import androidx.navigation.NavController
 import com.example.hostelite.R
 import com.example.hostelite.shared.widgets.AppBar
+import com.google.android.gms.location.FusedLocationProviderClient
+
+var latitude: String = "28.6359552"
+var longitude: String = "77.2046848"
 
 @Composable
 fun MarkEntry(navController: NavController){
+
+    val fusedLocationProviderClient = FusedLocationProviderClient(navController.context)
+
     val token = remember {mutableStateOf("")}
     Scaffold(
         topBar = { AppBar(navController = navController, text = "Mark Entry")}
@@ -92,7 +104,7 @@ fun MarkEntry(navController: NavController){
                         )
                         Spacer(modifier = Modifier.height(20.dp))
                         Text(
-                            text = "Latitude: ",
+                            text = "Latitude: ${latitude} ",
                             style = TextStyle(
                                 fontSize = 12.sp,
                                 fontWeight = FontWeight.W400,
@@ -100,7 +112,7 @@ fun MarkEntry(navController: NavController){
                             )
                         )
                         Text(
-                            text = "Longitude: ",
+                            text = "Longitude: ${longitude}",
                             style = TextStyle(
                                 fontSize = 12.sp,
                                 fontWeight = FontWeight.W400,
@@ -110,7 +122,7 @@ fun MarkEntry(navController: NavController){
                     }
                     Spacer(modifier = Modifier.width(40.dp))
                     IconButton(
-                        onClick = { /*TODO*/ },
+                        onClick = { getLocation(navController.context,fusedLocationProviderClient) },
                         modifier = Modifier
                             .size(width = 30.dp, height = 30.dp)
                             .clip(shape = CircleShape)
@@ -140,6 +152,23 @@ fun MarkEntry(navController: NavController){
                     )
                 }
             }
+        }
+    }
+}
+
+fun getLocation(context: Context, fusedLocationProviderClient: FusedLocationProviderClient) {
+    if(ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+        && ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+    {
+        ActivityCompat.requestPermissions(context as Activity, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION), 100)
+        return
+    }
+
+    val location = fusedLocationProviderClient.lastLocation
+    location.addOnSuccessListener {
+        if(it!=null) {
+            latitude = it.latitude.toString()
+            longitude = it.longitude.toString()
         }
     }
 }

@@ -66,7 +66,7 @@ fun Login(
             ){
                 Image(
                     painter = painterResource(id = R.drawable.fiiitdback),
-                    contentDescription = "Hostellite Logo",
+                    contentDescription = "FIIITDBACK Logo",
                     modifier = Modifier
                         .fillMaxWidth()
                 )
