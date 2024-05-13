@@ -32,8 +32,8 @@ For administration, the integrated features will include:
 
 <p align="left"><img src="https://github.com/dhananjay23033/FIIITDBACK/assets/142231579/8d60d74c-d607-403b-b33e-0ccf28ddffd9" alt="android" width="220" height="500"/> 
 <img src="https://github.com/dhananjay23033/FIIITDBACK/assets/142231579/53b4fd74-3c42-477e-b16f-2ef5f8b6a4a5" alt="android" width="220" height="500"/> 
-<img src="" alt="android" width="220" height="500"/> 
+<img src="https://github.com/dhananjay23033/FIIITDBACK/assets/142231579/25029fd7-59f1-45ba-af96-6164be070203"
+ alt="android" width="220" height="500"/> 
 <img src="https://github.com/dhananjay23033/FIIITDBACK/assets/142231579/8e6edcab-dfff-4cf9-9c06-c4f0dad4284e"
- alt="https://github.com/dhananjay23033/FIIITDBACK/assets/142231579/44c000d5-6fdc-4350-9bcf-a9cc46c2d847)
-id" width="220" height="500"/> 
-<img src="" alt="android" width="220" height="500"/> </p>
+ alt="") id" width="220" height="500"/> 
+<img src="https://github.com/dhananjay23033/FIIITDBACK/assets/142231579/44c000d5-6fdc-4350-9bcf-a9cc46c2d847" alt="android" width="220" height="500"/> </p>
