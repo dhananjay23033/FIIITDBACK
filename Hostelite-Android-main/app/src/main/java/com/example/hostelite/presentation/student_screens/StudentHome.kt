@@ -1,7 +1,9 @@
 package com.example.hostelite.presentation.student_screens
 
 import android.annotation.SuppressLint
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.*
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.scrollable
@@ -34,9 +36,13 @@ import androidx.navigation.compose.rememberNavController
 import com.example.hostelite.R
 import com.example.hostelite.shared.widgets.BottomDrawer
 import com.example.hostelite.util.Constants
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
+@RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun StudentHome(navController: NavController){
@@ -44,16 +50,16 @@ fun StudentHome(navController: NavController){
     val coroutineScope = rememberCoroutineScope()
 
     val firestore = FirebaseFirestore.getInstance()
+    val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
-    // Retrieve student email entered during sign In
-    val email = navController.currentBackStackEntry?.savedStateHandle?.get<String>("email")
-    val userDocRef = email?.let { firestore.collection(Constants.COLLECTION_NAME_STUDENTS).document(it) }
+// Retrieve student userId
+    val userId = auth.currentUser?.uid
+    val userDocRef = userId?.let { firestore.collection(Constants.COLLECTION_NAME_STUDENTS).document(it) }
 
-    Log.d("email", email.toString())
-
+    Log.d("user", userId.toString())
     Log.d("userDocRef", userDocRef.toString())
 
-    // State to hold student details
+// State to hold student details
     val studentName = remember { mutableStateOf("") }
     val roomNumber = remember { mutableStateOf("") }
 
@@ -63,12 +69,19 @@ fun StudentHome(navController: NavController){
                 val data = document.data
                 studentName.value = data?.get("userName").toString()
                 roomNumber.value = data?.get("roomNo").toString()
-            }
-        }
-    }
 
-    Log.d("studentName", studentName.toString())
-    Log.d("room No", roomNumber.toString())
+                // Log inside the onSuccessListener
+                Log.d("studentName", studentName.value)
+                Log.d("roomNo", roomNumber.value)
+            } else {
+                Log.d("Firestore", "No such document")
+            }
+        }.addOnFailureListener { e ->
+            Log.w("Firestore", "Error getting documents: ", e)
+        }
+    } else {
+        Log.d("Firestore", "userDocRef is null")
+    }
 
     ModalDrawer(
         drawerContent = {
@@ -103,7 +116,7 @@ fun StudentHome(navController: NavController){
                     horizontalAlignment = Alignment.CenterHorizontally
                 ){
                     Image(
-                        painter = painterResource(id = R.drawable.ritwik),
+                        painter = painterResource(id = R.drawable.dhananjay),
                         contentDescription = "dp",
                         modifier = Modifier
                             .size(140.dp)
@@ -178,7 +191,7 @@ fun StudentHome(navController: NavController){
                             Icon(imageVector = Icons.Filled.Menu, contentDescription = "Menu")
                         }
                         Image(
-                            painter = painterResource(id = R.drawable.hostellite ),
+                            painter = painterResource(id = R.drawable.fiiitdback ),
                             contentDescription = null
                         )
                         IconButton(onClick = {
@@ -197,7 +210,7 @@ fun StudentHome(navController: NavController){
                             )
                     ) {
                         Text(
-                            text = "27 September",
+                            text = LocalDate.now().format(DateTimeFormatter.ofPattern("dd MMMM")),
                             style = TextStyle(
                                 fontSize = 16.sp,
                                 color = Color(0xFFA7A7A7),
@@ -206,7 +219,7 @@ fun StudentHome(navController: NavController){
                         )
                         Spacer(modifier = Modifier.height(10.dp))
                         Text(
-                            text = "Hello, Ritwik",
+                            text = "Hello, ${studentName.value}",
                             style = TextStyle(
                                 fontSize = 25.sp,
                                 fontWeight = FontWeight.W700
@@ -274,7 +287,7 @@ fun StudentHome(navController: NavController){
                                 Row(
                                     modifier = Modifier
                                         .clip(shape = RoundedCornerShape(corner = CornerSize(20.dp)))
-                                        .background(Color(0xFFFFBCF4))
+                                        .background(Color(0xFF08C8B6))
                                         .weight(1f)
                                         .clickable { navController.navigate(route = "markentry") },
                                     verticalAlignment = Alignment.CenterVertically
@@ -286,6 +299,7 @@ fun StudentHome(navController: NavController){
                                     )
                                     Text(
                                         text = "Mark Entry",
+                                        Modifier.padding(horizontal = 5.dp),
                                         style = TextStyle(
                                             fontSize = 16.sp,
                                             fontWeight = FontWeight.W700,
@@ -297,7 +311,7 @@ fun StudentHome(navController: NavController){
                                 Row(
                                     modifier = Modifier
                                         .clip(shape = RoundedCornerShape(corner = CornerSize(20.dp)))
-                                        .background(Color(0xFF51E71D))
+                                        .background(Color(0xFFFFEB3B))
                                         .weight(1f)
                                         .clickable { navController.navigate(route = "markexit")},
                                     verticalAlignment = Alignment.CenterVertically
@@ -309,10 +323,11 @@ fun StudentHome(navController: NavController){
                                     )
                                     Text(
                                         text = "Mark Exit",
+                                        Modifier.padding(horizontal = 5.dp),
                                         style = TextStyle(
                                             fontSize = 16.sp,
                                             fontWeight = FontWeight.W700,
-                                            color = Color.White
+                                            color = Color.Black
                                         )
                                     )
                                 }
@@ -356,5 +371,5 @@ fun drawerContent(text: String, icon: ImageVector){
 @Preview
 @Composable
 fun StudentHomePreview(){
-    StudentHome(navController = rememberNavController())
+//    StudentHome(navController = rememberNavController())
 }

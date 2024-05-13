@@ -36,7 +36,7 @@ fun AdminProfile(navController: NavController){
     )
     Scaffold(
         bottomBar = { BottomDrawer(navController = navController, isStudent = false)},
-    ) {
+    ) {paddingValues ->
         Box(
             modifier = Modifier.fillMaxSize()
         ){
@@ -44,7 +44,8 @@ fun AdminProfile(navController: NavController){
                 onClick = { navController.popBackStack() },
                 modifier = Modifier
                     .padding(all = 10.dp)
-                    .align(Alignment.TopStart)) {
+                    .align(Alignment.TopStart)
+                    .padding(paddingValues)) {
                 Icon(imageVector = Icons.Filled.ArrowBackIos, contentDescription = null)
             }
             Column(
@@ -103,14 +104,14 @@ fun AdminProfile(navController: NavController){
                     verticalAlignment = Alignment.CenterVertically
                 ){
                     Row(
-                        modifier = Modifier.fillMaxHeight().width(50.dp).background(color = Color(0xFF9C32A6)),
+                        modifier = Modifier.fillMaxHeight().width(50.dp).background(color = Color(0xFF2D716B)),
                         horizontalArrangement = Arrangement.Center,
                         verticalAlignment = Alignment.CenterVertically
                     ){
                         Icon(imageVector = Icons.Filled.Logout, contentDescription = "Log Out", tint = Color.White)
                     }
                     Row(
-                        modifier = Modifier.fillMaxHeight().width(150.dp).background(color = Color(0xFFCA48D6)),
+                        modifier = Modifier.fillMaxHeight().width(150.dp).background(color = Color(0xFF08C8B6)),
                         horizontalArrangement = Arrangement.Center,
                         verticalAlignment = Alignment.CenterVertically
                     ){

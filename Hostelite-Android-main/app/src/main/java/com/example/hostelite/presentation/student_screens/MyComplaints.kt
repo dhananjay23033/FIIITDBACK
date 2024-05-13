@@ -49,23 +49,23 @@ fun MyComplaints(navController: NavController){
     val myComplaints : MutableList<MyComplaint> = mutableListOf(
         MyComplaint(
             title = "Food Quality",
-            date = "14.05.2021",
+            date = "14.05.2024",
             imgUrl = R.drawable.badfood,
-            complaintText = "Hello Sir, the food quality is steeply degrading day by day that is affecting our health also . The rotis are much hard to chew and also they don’t serve hot roties and in paneer ki sabji we are hardy able to find pieces of paneer. it is my immediate request please fix these problems as soon as possible.",
+            complaintText = "The Rotis were uneatable, the rice felt uncooked kindly look into it.",
             status = "Sorted",
             time = "08:45 PM"
         ),
         MyComplaint(
             title = "Food Quality",
-            date = "29.05.2021",
+            date = "13.05.2024",
             imgUrl = R.drawable.badfood,
-            complaintText = "Hello Sir, the food quality is steeply degrading day by day that is affecting our health also . The rotis are much hard to chew and also they don’t serve hot roties and in paneer ki sabji we are hardy able to find pieces of paneer. it is my immediate request please fix these problems as soon as possible.",
+            complaintText = "The Rotis were uneatable, the rice felt uncooked kindly look into it.",
             status = "Pending",
             time = "08:45 PM"
         ),
         MyComplaint(
             title = "Food Quality",
-            date = "30.05.2021",
+            date = "02.05.2024",
             imgUrl = R.drawable.badfood,
             complaintText = "Hello Sir, the food quality is steeply degrading day by day that is affecting our health also . The rotis are much hard to chew and also they don’t serve hot roties and in paneer ki sabji we are hardy able to find pieces of paneer. it is my immediate request please fix these problems as soon as possible.",
             status = "Rejected",
@@ -76,13 +76,14 @@ fun MyComplaints(navController: NavController){
     Scaffold(
         topBar = { AppBar(navController = navController, text = "Your Complaint Status")},
         bottomBar = { BottomDrawer(navController = navController, isStudent = true)}
-    ) {
+    ) {paddingValues ->
         Column(
             modifier = Modifier.padding(horizontal = 30.dp, vertical = 24.dp)
         ){
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier.fillMaxWidth()
+
             ){
                 val textStyle = TextStyle(
                     fontSize = 16.sp,

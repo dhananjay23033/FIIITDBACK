@@ -54,7 +54,7 @@ fun BoardingPage(onNavigateToLogin: () -> Unit){
                     .padding(bottom = 50.dp)
                     .then(Modifier.size(50.dp))
                     .clip(CircleShape)
-                    .background(Color(0xFF9C32A6))
+                    .background(Color(0xFF009688))
                     .align(Alignment.BottomEnd),
                 content = { forwardButton() },
             )
@@ -66,7 +66,7 @@ fun BoardingPage(onNavigateToLogin: () -> Unit){
                 modifier = Modifier
                     .clip(RoundedCornerShape(corner = CornerSize(15.dp)))
                     .fillMaxWidth(0.75f)
-                    .background(color = Color(0xFF9C32A6))
+                    .background(color = Color(0xFF009688))
                     .align(Alignment.BottomCenter)
             ) {
                 Text(
@@ -109,15 +109,15 @@ fun mainContent(pagerState: PagerState, coroutineScope: CoroutineScope){
     )
 
     val primaryTexts : List<String> = listOf(
-        "Solve your Issues",
-        "Fast & Easy!",
-        "Keep Track!"
+        "Get Quick Help",
+        "Faster Response",
+        "Track your Query"
     )
 
     val secondaryTexts : List<String> = listOf(
-        "Contact  to authorities whenever you have any complaints.",
-        "Now you can mark your entry and exit in just a tap.",
-        "Now keep track of hostelites with our enhanced location tracker ."
+        "Reach out to the authorities for any complaints you might have.",
+        "Now, you can log your entry and exit with just a tap.",
+        "Track hostel activities more effectively with our tracking feature"
     )
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -164,14 +164,14 @@ fun Dots(isCurrent: Boolean){
             .fillMaxWidth(0.2f)
             .size(10.dp)
             .clip(RoundedCornerShape(10.dp))
-            .background(Color(0xFF9C32A6))
+            .background(Color(0xFF009688))
     }
     else{
         modifier = Modifier
             .padding(horizontal = 5.dp)
             .size(10.dp)
             .clip(CircleShape)
-            .background(Color(0xFF9C32A6))
+            .background(Color(0xFF009688))
     }
 
     Box(modifier = modifier)

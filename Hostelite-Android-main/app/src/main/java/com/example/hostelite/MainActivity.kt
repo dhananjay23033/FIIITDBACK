@@ -1,6 +1,7 @@
 package com.example.hostelite
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -82,19 +83,21 @@ fun NavigationController(navController: NavHostController, authViewModel: Authen
             AdminHome(navController)
         }
         composable(route = "studententryexitreports"){
-
+            StudentHome(navController)
         }
         composable(route = "adminentryexitreports"){
-
+            AdminHome(navController)
         }
         composable(route = "mycomplaints"){
             MyComplaints(navController = navController)
         }
         composable(route = "studentprofile"){
             StudentProfile(navController = navController, viewModel = authViewModel)
+//            StudentHome(navController)
         }
         composable(route = "adminprofile"){
             AdminProfile(navController = navController)
+//            AdminHome(navController)
         }
         composable(route = "adminalerts"){
             AdminAlertsScreen(navController = navController)

@@ -84,7 +84,7 @@ class AuthenticationRepositoryImpl @Inject constructor(
                     roomNo = roomNo,
                     mobNo = mobNo
                 )
-                firestore.collection(Constants.COLLECTION_NAME_STUDENTS).document(email).set(obj).addOnSuccessListener {
+                firestore.collection(Constants.COLLECTION_NAME_STUDENTS).document(userId).set(obj).addOnSuccessListener {
 
                 }.await()
                 emit(Response.Success(operationSuccessful))

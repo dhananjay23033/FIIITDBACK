@@ -1,5 +1,6 @@
 package com.example.hostelite.presentation.landing_pages
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -55,15 +56,16 @@ fun Login(
         Scaffold(
             modifier = Modifier.fillMaxSize(),
             scaffoldState = scaffoldState
-        ) {
+        ) { paddingValues ->
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
                     .align(Alignment.TopCenter)
                     .fillMaxSize()
+                    .padding(paddingValues)
             ){
                 Image(
-                    painter = painterResource(id = R.drawable.hostellite),
+                    painter = painterResource(id = R.drawable.fiiitdback),
                     contentDescription = "Hostellite Logo",
                     modifier = Modifier
                         .fillMaxWidth()
@@ -118,7 +120,7 @@ fun Login(
                         text = AnnotatedString(
                             text = "Forgot Password?",
                             spanStyle = SpanStyle(
-                                color = Color(0xFFF76306),
+                                color = Color(0xFF03DAC5),
                                 fontSize = 12.sp,
                                 fontWeight = FontWeight.W400
                             )
@@ -162,7 +164,7 @@ fun Login(
                     modifier = Modifier
                         .clip(RoundedCornerShape(corner = CornerSize(15.dp)))
                         .fillMaxWidth(0.75f)
-                        .background(color = Color(0xFF9C32A6))
+                        .background(color = Color(0xFF2D716B))
                 ) {
                     Text(
                         text = "Login",
@@ -195,7 +197,8 @@ fun Login(
                                 }
                             }
                             else{
-                                Toast.makeText(LocalContext.current, "Sign In Failed", Toast.LENGTH_SHORT).show()
+//                                Toast.makeText(LocalContext.current, "Sign In Failed", Toast.LENGTH_SHORT).show()
+                                Log.d("Sign in failed", "")
                             }
                         }
                         is Response.Error -> {
@@ -214,7 +217,7 @@ fun Login(
                         .fillMaxWidth(0.85f)
                         .border(
                             width = 1.dp,
-                            color = Color(0xF9FF4FED),
+                            color = Color(0xF92D716B),
                             shape = RoundedCornerShape(corner = CornerSize(15.dp))
                         )
                 ) {

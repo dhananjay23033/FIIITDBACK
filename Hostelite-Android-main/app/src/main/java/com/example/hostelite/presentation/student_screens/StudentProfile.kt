@@ -1,6 +1,7 @@
 package com.example.hostelite.presentation.student_screens
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -14,6 +15,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIos
 import androidx.compose.material.icons.filled.Logout
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -30,16 +33,61 @@ import com.example.hostelite.R
 import com.example.hostelite.presentation.Authentication.AuthenticationViewModel
 import com.example.hostelite.shared.widgets.BottomDrawer
 import com.example.hostelite.shared.widgets.UserDetailField
+import com.example.hostelite.util.Constants
 import com.example.hostelite.util.Response
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun StudentProfile(navController: NavController, viewModel: AuthenticationViewModel){
+
+    val firestore = FirebaseFirestore.getInstance()
+    val auth: FirebaseAuth = FirebaseAuth.getInstance()
+
+// Retrieve student userId
+    val userId = auth.currentUser?.uid
+    val userDocRef = userId?.let { firestore.collection(Constants.COLLECTION_NAME_STUDENTS).document(it) }
+
+    Log.d("user", userId.toString())
+    Log.d("userDocRef", userDocRef.toString())
+
+// State to hold student details
+    val studentName = remember { mutableStateOf("") }
+    val roomNumber = remember { mutableStateOf("") }
+    val email = remember { mutableStateOf("") }
+    val rollNo = remember { mutableStateOf("") }
+    val mobNo = remember { mutableStateOf("") }
+
+
+    if (userDocRef != null) {
+        userDocRef.get().addOnSuccessListener { document ->
+            if (document != null && document.exists()) {
+                val data = document.data
+                studentName.value = data?.get("userName").toString()
+                roomNumber.value = data?.get("roomNo").toString()
+                email.value = data?.get("email").toString()
+                rollNo.value = data?.get("rollNo").toString()
+                mobNo.value = data?.get("mobNo").toString()
+
+                // Log inside the onSuccessListener
+                Log.d("studentName", studentName.value)
+                Log.d("roomNo", roomNumber.value)
+            } else {
+                Log.d("Firestore", "No such document")
+            }
+        }.addOnFailureListener { e ->
+            Log.w("Firestore", "Error getting documents: ", e)
+        }
+    } else {
+        Log.d("Firestore", "userDocRef is null")
+    }
+
     val fieldValues: List<Pair<String, String>> = listOf(
-        Pair(first = "E-mail", second = "josp.ug20.ece@nitp.ac.in"),
-        Pair(first = "Roll No.", second = "2106037"),
-        Pair(first = "Mobile", second = "9999999999"),
-        Pair(first = "Room No.", second = "2-03"),
+        Pair(first = "E-mail", second = email.value),
+        Pair(first = "Roll No.", second = rollNo.value),
+        Pair(first = "Mobile", second = mobNo.value),
+        Pair(first = "Room No.", second = roomNumber.value),
     )
     Scaffold(
         bottomBar = { BottomDrawer(navController = navController, isStudent = true)},
@@ -75,14 +123,14 @@ fun StudentProfile(navController: NavController, viewModel: AuthenticationViewMo
                 }
                 Spacer(modifier = Modifier.height(25.dp))
                 Text(
-                    text = "Jos Pritam",
+                    text = studentName.value,
                     style = TextStyle(
                         fontSize = 24.sp,
                         fontWeight = FontWeight.W500
                     )
                 )
                 Text(
-                    text = "B.Tech",
+                    text = "M.Tech",
                     style = TextStyle(
                         fontSize = 20.sp,
                         fontWeight = FontWeight.W500,
@@ -90,7 +138,7 @@ fun StudentProfile(navController: NavController, viewModel: AuthenticationViewMo
                     )
                 )
                 Text(
-                    text = "CSE 2021",
+                    text = "CSE 2025",
                     style = TextStyle(
                         fontSize = 20.sp,
                         fontWeight = FontWeight.W400,
@@ -131,7 +179,7 @@ fun StudentProfile(navController: NavController, viewModel: AuthenticationViewMo
                         modifier = Modifier
                             .fillMaxHeight()
                             .width(50.dp)
-                            .background(color = Color(0xFF9C32A6)),
+                            .background(color = Color(0xFF2D716B)),
                         horizontalArrangement = Arrangement.Center,
                         verticalAlignment = Alignment.CenterVertically
                     ){
@@ -141,7 +189,7 @@ fun StudentProfile(navController: NavController, viewModel: AuthenticationViewMo
                         modifier = Modifier
                             .fillMaxHeight()
                             .width(150.dp)
-                            .background(color = Color(0xFFCA48D6)),
+                            .background(color = Color(0xFF08C8B6)),
                         horizontalArrangement = Arrangement.Center,
                         verticalAlignment = Alignment.CenterVertically
                     ){

@@ -65,7 +65,7 @@ fun AdminHome(navController: NavController){
                     horizontalAlignment = Alignment.CenterHorizontally
                 ){
                     Image(
-                        painter = painterResource(id = R.drawable.ritwik),
+                        painter = painterResource(id = R.drawable.dhananjay),
                         contentDescription = "dp",
                         modifier = Modifier
                             .size(140.dp)
@@ -141,7 +141,7 @@ fun AdminHome(navController: NavController){
                             Icon(imageVector = Icons.Filled.Menu, contentDescription = "Menu")
                         }
                         Image(
-                            painter = painterResource(id = R.drawable.hostellite ),
+                            painter = painterResource(id = R.drawable.fiiitdback ),
                             contentDescription = null,
                             modifier = Modifier.weight(4f)
                         )

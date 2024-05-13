@@ -44,7 +44,7 @@ fun MarkEntry(navController: NavController){
                     .fillMaxSize()
             )
             Image(
-                painter = painterResource(id = R.drawable.hostellite),
+                painter = painterResource(id = R.drawable.fiiitdback),
                 contentDescription = null,
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
@@ -125,7 +125,7 @@ fun MarkEntry(navController: NavController){
                         .height(50.dp)
                         .width(160.dp)
                         .clip(shape = RoundedCornerShape(corner = CornerSize(size = 15.dp)))
-                        .background(color = Color(0xFFFE96FA))
+                        .background(color = Color(0xFF08C8B6))
                         .clickable { /* Todo */ },
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically

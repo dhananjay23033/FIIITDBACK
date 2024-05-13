@@ -52,7 +52,7 @@ fun SplashScreen(navController: NavController, authViewModel: AuthenticationView
         modifier = Modifier.fillMaxSize()
     ){
         Image(
-            painter = painterResource(id = R.drawable.hostellite),
+            painter = painterResource(id = R.drawable.fiiitdback),
             contentDescription = null,
             modifier = Modifier.fillMaxSize().scale(scale.value)
         )
