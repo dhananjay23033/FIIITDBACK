@@ -3,6 +3,9 @@ package com.example.hostelite.presentation.student_screens
 import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
+import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -14,6 +17,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.GpsFixed
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -31,21 +35,23 @@ import androidx.navigation.NavController
 import com.example.hostelite.R
 import com.example.hostelite.shared.widgets.AppBar
 import com.google.android.gms.location.FusedLocationProviderClient
-
-var latitude: String = "28.6359552"
-var longitude: String = "77.2046848"
+import com.google.android.gms.location.LocationServices
 
 @Composable
-fun MarkEntry(navController: NavController){
+fun MarkEntry(navController: NavController) {
 
     val fusedLocationProviderClient = FusedLocationProviderClient(navController.context)
 
-    val token = remember {mutableStateOf("")}
+    val token = remember { mutableStateOf("") }
+    val latitude = remember { mutableStateOf("28.6359552") }
+    val longitude = remember { mutableStateOf("77.2046848") }
+
     Scaffold(
-        topBar = { AppBar(navController = navController, text = "Mark Entry")}
-    ) {
+        topBar = { AppBar(navController = navController, text = "Mark Entry") }
+    ) { paddingValues ->
         Box(
             modifier = Modifier.fillMaxSize()
+                .padding(paddingValues)
         ) {
             Image(
                 painter = painterResource(id = R.drawable.bg),
@@ -68,12 +74,12 @@ fun MarkEntry(navController: NavController){
                     .align(Alignment.Center)
                     .padding(horizontal = 20.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
-            ){
+            ) {
                 OutlinedTextField(
                     value = token.value,
-                    onValueChange = {token.value = it},
+                    onValueChange = { token.value = it },
                     singleLine = true,
-                    placeholder = {Text(text = "Enter token")},
+                    placeholder = { Text(text = "Enter token") },
                     modifier = Modifier
                         .fillMaxWidth()
                         .clip(shape = RoundedCornerShape(corner = CornerSize(20.dp)))
@@ -84,7 +90,7 @@ fun MarkEntry(navController: NavController){
                 Row(
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically
-                ){
+                ) {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier
@@ -104,7 +110,7 @@ fun MarkEntry(navController: NavController){
                         )
                         Spacer(modifier = Modifier.height(20.dp))
                         Text(
-                            text = "Latitude: ${latitude} ",
+                            text = "Latitude: ${latitude.value} ",
                             style = TextStyle(
                                 fontSize = 12.sp,
                                 fontWeight = FontWeight.W400,
@@ -112,7 +118,7 @@ fun MarkEntry(navController: NavController){
                             )
                         )
                         Text(
-                            text = "Longitude: ${longitude}",
+                            text = "Longitude: ${longitude.value}",
                             style = TextStyle(
                                 fontSize = 12.sp,
                                 fontWeight = FontWeight.W400,
@@ -122,7 +128,7 @@ fun MarkEntry(navController: NavController){
                     }
                     Spacer(modifier = Modifier.width(40.dp))
                     IconButton(
-                        onClick = { getLocation(navController.context,fusedLocationProviderClient) },
+                        onClick = { getLocation(navController.context, fusedLocationProviderClient, latitude, longitude) },
                         modifier = Modifier
                             .size(width = 30.dp, height = 30.dp)
                             .clip(shape = CircleShape)
@@ -141,7 +147,7 @@ fun MarkEntry(navController: NavController){
                         .clickable { /* Todo */ },
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically
-                ){
+                ) {
                     Text(
                         text = "Mark Entry",
                         style = TextStyle(
@@ -156,19 +162,21 @@ fun MarkEntry(navController: NavController){
     }
 }
 
-fun getLocation(context: Context, fusedLocationProviderClient: FusedLocationProviderClient) {
-    if(ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-        && ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-    {
+fun getLocation(context: Context, fusedLocationProviderClient: FusedLocationProviderClient, latitude: MutableState<String>, longitude: MutableState<String>) {
+    Log.d("Get Location Called"," ")
+    if (ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+        && ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+    ) {
         ActivityCompat.requestPermissions(context as Activity, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION), 100)
         return
     }
 
     val location = fusedLocationProviderClient.lastLocation
     location.addOnSuccessListener {
-        if(it!=null) {
-            latitude = it.latitude.toString()
-            longitude = it.longitude.toString()
+        if (it != null) {
+            Log.d("Latitude: ${it.latitude} Longitude: ${it.longitude}", " ")
+            latitude.value = it.latitude.toString()
+            longitude.value = it.longitude.toString()
         }
     }
 }
