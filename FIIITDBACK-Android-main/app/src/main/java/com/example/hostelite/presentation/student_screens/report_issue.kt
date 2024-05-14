@@ -1,5 +1,10 @@
 package com.example.hostelite.presentation.student_screens
 
+
+import android.net.Uri
+import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -25,32 +30,49 @@ import androidx.navigation.NavController
 import com.example.hostelite.shared.widgets.AppBar
 
 @Composable
-fun StudentReportIssue(navController: NavController){
-    val expanded = remember { mutableStateOf(false)}
-    val complaintCategories = listOf<String>(
+fun StudentReportIssue(navController: NavController) {
+
+
+    val expanded = remember { mutableStateOf(false) }
+    val complaintCategories = listOf(
         "Mess",
         "Cleanliness",
         "Maintenance",
         "Others"
     )
-    val selectedComplaint = remember { mutableStateOf("")}
-    val issue = remember { mutableStateOf("")}
-    val icon = if(expanded.value){
+
+    val selectedComplaint = remember { mutableStateOf("") }
+    val issue = remember { mutableStateOf("") }
+    val icon = if (expanded.value) {
         Icons.Filled.KeyboardArrowUp
-    } else{
+    } else {
         Icons.Filled.KeyboardArrowDown
     }
-    
+
+    // State to hold the image URI
+    val selectedImageUri = remember { mutableStateOf<Uri?>(null) }
+
+    // Image picker launcher
+    val imagePickerLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        selectedImageUri.value = uri
+        uri?.let {
+            Log.d("ImagePicker", "Selected image URI: $it")
+        }
+    }
+
     Scaffold(
-        topBar = {AppBar(navController, "Report an Issue")}
-    ) {
+        topBar = { AppBar(navController, "Report an Issue") }
+    ) { paddingValues ->
         Box(
             modifier = Modifier
                 .padding(bottom = 40.dp)
                 .fillMaxSize()
-        ){
+                .padding(paddingValues)
+        ) {
             Text(
-                text = "Information about your device,account and this app will be automatically included in this report. To learn more about how your information is used,please see our Data Use Policy.",
+                text = "Information about your device, account and this app will be automatically included in this report. To learn more about how your information is used, please see our Data Use Policy.",
                 style = TextStyle(
                     fontSize = 10.sp,
                     fontWeight = FontWeight.W400,
@@ -65,12 +87,12 @@ fun StudentReportIssue(navController: NavController){
                     .align(Alignment.Center)
                     .padding(vertical = 30.dp, horizontal = 30.dp),
             ) {
-                Column() {
+                Column {
                     OutlinedTextField(
                         value = selectedComplaint.value,
                         readOnly = true,
                         onValueChange = { selectedComplaint.value = it },
-                        label = @Composable() { Text(text = "Your issue..") },
+                        label = { Text(text = "Your issue..") },
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth(),
                         trailingIcon = {
@@ -94,12 +116,12 @@ fun StudentReportIssue(navController: NavController){
                                 Text(text = label)
                             }
                         }
-                    }   
+                    }
                 }
                 Spacer(modifier = Modifier.height(40.dp))
                 OutlinedTextField(
                     value = issue.value,
-                    onValueChange = {issue.value = it},
+                    onValueChange = { issue.value = it },
                     placeholder = { Text("Type an explanation...") },
                     maxLines = 50,
                     modifier = Modifier
@@ -108,7 +130,7 @@ fun StudentReportIssue(navController: NavController){
                 )
                 Spacer(modifier = Modifier.height(30.dp))
                 TextButton(
-                    onClick = { /*TODO*/ },
+                    onClick = { imagePickerLauncher.launch("image/*") },
                     modifier = Modifier
                         .width(140.dp)
                         .height(40.dp)
@@ -128,9 +150,10 @@ fun StudentReportIssue(navController: NavController){
                 Row(
                     horizontalArrangement = Arrangement.End,
                     modifier = Modifier.fillMaxWidth()
-                ){
+                ) {
                     TextButton(
-                        onClick = { /*TODO*/ },
+                        onClick = {
+                        },
                         modifier = Modifier
                             .width(150.dp)
                             .height(50.dp)
